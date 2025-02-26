@@ -27,7 +27,7 @@ const Login = () => {
 
     // LOGIN FUNCTIONALITY FROM USERCONTEXT
     login(email, password);
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
 
   return (

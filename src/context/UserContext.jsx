@@ -1,25 +1,38 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
 
 function UserContextProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("authToken"));
+  const boolean = JSON.parse(localStorage.getItem("authToken"));
+  const [isAuthenticated, setIsAuthenticated] = useState(boolean || "" );
 
   const navigate = useNavigate();
+
+  console.log(window.location.href);
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [boolean]);
 
   // LOGIN FUNCTIONALITY
   const login = (email, password) => {
     const token = "182y49h4193h4u91394939214h9h3h9h";
 
-    if (!email) {
+    if (!email || !email.includes("@")) {
       alert("Please Enter Proper Email ID");
+      return;
     }
 
-    if (!password) {
+    if (!password || password.length < 8) {
       alert("Please Enter proper Password");
+      return;
     }
 
     const payload = {
@@ -29,8 +42,9 @@ function UserContextProvider({ children }) {
     };
 
     if (payload.email.length > 0) {
-      localStorage.setItem("authToken", token);
+      localStorage.setItem("authToken", JSON.stringify(token));
       navigate("/dashboard");
+      window.location.reload();
     }
   };
 

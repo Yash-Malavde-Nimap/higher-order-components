@@ -18,12 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedDashboard />
-          }
-        />
+        <Route path="/dashboard" element={<ProtectedDashboard />} />
       </Routes>
       {/* </UserContextProvider>
       </Router> */}
